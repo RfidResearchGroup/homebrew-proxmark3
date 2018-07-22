@@ -14,7 +14,7 @@ The old HID-flasher doesn't compile on this version. You'll need to manually fix
 
 3. Install Proxmark3:
     `brew install proxmark3` for stable release 
-	`brew install --HEAD proxmark3` for latest non-stable from GitHub (use this if previous command fails)
+    `brew install --HEAD proxmark3` for latest non-stable from GitHub (use this if previous command fails)
 
 	 
 ### Usage
@@ -39,7 +39,7 @@ usually you replace the tty with where your proxmark3 device got installed on yo
 Current release version is ice_v4.0.0
 
 
-###Maintainers
+### Maintainers
 
 original [chrisfu](https://github.com/chrisfu/homebrew-tap), [zhovner](https://github.com/zhovner)
 
