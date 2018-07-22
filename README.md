@@ -3,18 +3,19 @@ Homebrew tap of RRG Proxmark3 repo based on iceman fork
 
 [Homebrew](http://brew.sh) - is a open-source package manager for Apple macOS.
 
-This repository contains homebrew formulas for RRG iceman fork of proxmark3 project with it dependencies.
+This repository contains homebrew formulas for Rfid Research Group RRG proxmark3 project with it dependencies.
+The repo is based on iceman fork.
 The old HID-flasher doesn't compile on this version. You'll need to manually fix/compile it on MacOS.
 
 ### Install
 
-1. Install homebrew if you haven't yet already done so: http://brew.sh/
+- Install homebrew if you haven't yet already done so: http://brew.sh/
 
-2. Tap this repo: `brew tap rfidresearchgroup/proxmark3`
+- Tap this repo: `brew tap rfidresearchgroup/proxmark3`
 
-3. Install Proxmark3:
-    `brew install proxmark3` for stable release 
-    `brew install --HEAD proxmark3` for latest non-stable from GitHub (use this if previous command fails)
+- Install Proxmark3:
+  - `brew install proxmark3` for stable release 
+  - `brew install --HEAD proxmark3` for latest non-stable from GitHub (use this if previous command fails)
 
 	 
 ### Usage
