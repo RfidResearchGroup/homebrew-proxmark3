@@ -1,9 +1,9 @@
 class Proxmark3 < Formula
   desc "RRG Proxmark3 client, CDC flasher and firmware bundle based on iceman fork"
   homepage "http://www.proxmark.org"
-#  url "https://github.com/iceman1001/proxmark3/archive/ice_v3.1.0.tar.gz"
+#  url "https://github.com/RfidResearchGroup/proxmark3/archive/xxxx.tar.gz"
 #  sha256 "bc19f98c661304db5a79e07b44b2f16ef5229b490985dc1d87e6f494a6729558"
-  head "https://github.com/RfidResearchGroup/PM3RDV40.git"
+  head "https://github.com/RfidResearchGroup/proxmark3.git"
 
   depends_on "automake" => :build
   depends_on "readline"
@@ -14,7 +14,7 @@ class Proxmark3 < Formula
   depends_on "wget"
   depends_on "qt5"
   depends_on "perl"
-  depends_on "RfidResearchGroup/PM3RDV40/arm-none-eabi-gcc" => :build
+  depends_on "RfidResearchGroup/proxmark3/arm-none-eabi-gcc" => :build
 
   def install
     ENV.deparallelize
