@@ -26,18 +26,18 @@ Firmware located at `/usr/local/share/firmware/`
 
 
 #### Connect to device
-`proxmark3 /dev/tty.usbmodem88888` 
+`proxmark3 /dev/tty.usbmodem888` 
 
 usually you replace the tty with where your proxmark3 device got installed on your system.
 
 
 #### Flashing bootloader & firmware  
-`sudo proxmark3-flasher /dev/tty.usbmodem88888 -b /usr/local/share/firmware/bootrom.elf /usr/local/share/firmware/fullimage.elf`  
+`sudo proxmark3-flasher /dev/tty.usbmodem888 -b /usr/local/share/firmware/bootrom.elf /usr/local/share/firmware/fullimage.elf`  
  
 	
 ### Info
 
-Current release version is ice_v4.0.0
+Current release version is UNKNOWN
 
 
 ### Maintainers
