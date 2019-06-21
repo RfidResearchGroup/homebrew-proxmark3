@@ -16,12 +16,19 @@ class Proxmark3 < Formula
   depends_on "perl"
   depends_on "RfidResearchGroup/proxmark3/arm-none-eabi-gcc" => :build
 
+  option "with-blueshark", "Enable Blueshark (BT Addon) support"
+
   def install
     ENV.deparallelize
 
+
 #    system "make", "-C", "client/hid-flasher/"
     system "make", "clean"	  
-    system "make", "all"
+    if build.with? "blueshark"
+      system "make", "all", "PLATFORM_EXTRAS=BTADDON"
+    else
+      system "make", "all"
+    end
 
     bin.mkpath
     bin.install "client/flasher" => "proxmark3-flasher"
