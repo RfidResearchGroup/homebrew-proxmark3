@@ -16,6 +16,7 @@ The old HID-flasher doesn't compile on this version. You'll need to manually fix
 - Install Proxmark3:
   - `brew install proxmark3` for stable release 
   - `brew install --HEAD proxmark3` for latest non-stable from GitHub (use this if previous command fails)
+  - `brew install --with-blueshark proxmark3` for blueshark support
 
 	 
 ### Usage
