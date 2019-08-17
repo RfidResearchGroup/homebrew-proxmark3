@@ -6,7 +6,7 @@ class Proxmark3 < Formula
   head do
     puts "env variable TRAVIS_COMMIT: `#{ENV['TRAVIS_COMMIT']}`"
     if ENV.has_key?('TRAVIS_COMMIT')
-      url "https://github.com/RfidResearchGroup/proxmark3.git", :branch => "#{ENV['TRAVIS_BRANCH']}", :revision => "#{ENV['TRAVIS_COMMIT']}"
+      url "https://github.com/merlokk/proxmark3i", :branch => "#{ENV['TRAVIS_BRANCH']}", :revision => "#{ENV['TRAVIS_COMMIT']}"
     else
       url "https://github.com/RfidResearchGroup/proxmark3.git"
     end
