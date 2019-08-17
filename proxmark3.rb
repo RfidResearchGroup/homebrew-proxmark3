@@ -1,6 +1,6 @@
 class Proxmark3 < Formula
-  desc "RRG/Iceman Proxmark3 client, CDC flasher and firmware bundle based on iceman fork"
-  homepage "http://www.proxmark.org"
+  desc "RRG/Iceman Proxmark3 client, CDC flasher and firmware bundle"
+  homepage "http://www.proxmark.org/"
 #  url "https://github.com/RfidResearchGroup/proxmark3/archive/xxxx.tar.gz"
 #  sha256 "bc19f98c661304db5a79e07b44b2f16ef5229b490985dc1d87e6f494a6729558"
   head do
