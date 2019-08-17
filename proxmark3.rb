@@ -3,8 +3,15 @@ class Proxmark3 < Formula
   homepage "http://www.proxmark.org"
 #  url "https://github.com/RfidResearchGroup/proxmark3/archive/xxxx.tar.gz"
 #  sha256 "bc19f98c661304db5a79e07b44b2f16ef5229b490985dc1d87e6f494a6729558"
-  head "https://github.com/RfidResearchGroup/proxmark3.git"
-
+  head do
+    puts "env variable REPOSITORY_EP: `#{ENV['REPOSITORY_EP']}`"
+    if ENV.has_key?('REPOSITORY_EP')
+      url "https://github.com/#{ENV['REPOSITORY_EP']}.git", :branch => "#{ENV['TRAVIS_BRANCH']}", :revision => "#{ENV['TRAVIS_COMMIT']}"
+    else
+      url "https://github.com/proxmark/proxmark3.git"
+    end
+  end
+  
   depends_on "automake" => :build
   depends_on "readline"
   depends_on "p7zip" => :build
