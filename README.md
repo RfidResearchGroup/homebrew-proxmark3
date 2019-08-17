@@ -39,13 +39,13 @@ Firmware located at
 
 
 #### Connect to device
-`proxmark3 /dev/tty.usbmodem888` 
+`proxmark3 /dev/tty.usbmodemiceman1` 
 
 usually you replace the tty with where your proxmark3 device got installed on your system.
 
 
 #### Flashing bootloader & firmware  
-`sudo proxmark3-flasher /dev/tty.usbmodem888 -b /usr/local/share/firmware/bootrom.elf /usr/local/share/firmware/fullimage.elf`  
+`sudo proxmark3-flasher /dev/tty.usbmodemiceman1 -b /usr/local/share/firmware/bootrom.elf /usr/local/share/firmware/fullimage.elf`  
  
 	
 ### Info
