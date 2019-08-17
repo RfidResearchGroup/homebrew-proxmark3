@@ -18,12 +18,24 @@ The old HID-flasher doesn't compile on this version. You'll need to manually fix
   - `brew install --HEAD proxmark3` for latest non-stable from GitHub (use this if previous command fails)
   - `brew install --with-blueshark proxmark3` for blueshark support
 
+### Errors while running
+
+- If you see this message 
+    `To reinstall HEAD, run brew reinstall proxmark3`
+- do this
+   ```
+   brew remove proxmark3
+   brew reinstall proxmark3
+   ```
+
 	 
 ### Usage
 
-Proxmark3 will be installed in `/usr/local/bin/proxmark3`  
+Proxmark3 will be installed in 
+`/usr/local/bin/proxmark3`  
 
-Firmware located at `/usr/local/share/firmware/`  
+Firmware located at 
+`/usr/local/share/firmware/`  
 
 
 #### Connect to device
