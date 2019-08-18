@@ -41,7 +41,7 @@ class Proxmark3 < Formula
     bin.install "client/flasher" => "proxmark3-flasher"
 #    bin.install "client/hid-flasher/flasher" => "proxmark3-hid-flasher"
     bin.install "client/proxmark3" => "proxmark3"
-    bin.install "client/fpga_compress" => "fpga_compress"
+#   bin.install "client/fpga_compress" => "fpga_compress"
 #	bin.install "tools/mfkey/mfkey32" => "mfkey32"
 #	bin.install "tools/mfkey/mfkey64" => "mfkey64"
 
