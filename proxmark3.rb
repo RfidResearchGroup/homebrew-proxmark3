@@ -28,11 +28,15 @@ class Proxmark3 < Formula
   def install
     ENV.deparallelize
 
+    if not ENV.has_key?('HOMEBREW_PROXMARK3_PLATFORM')
+      ENV['HOMEBREW_PROXMARK3_PLATFORM'] = 'PM3RDV4'
+    end
+
     system "make", "clean"	  
     if build.with? "blueshark"
-      system "make", "all", "PLATFORM_EXTRAS=BTADDON"
+      system "make", "all", "PLATFORM=#{ENV['HOMEBREW_PROXMARK3_PLATFORM']}", "PLATFORM_EXTRAS=BTADDON"
     else
-      system "make", "all"
+      system "make", "all", "PLATFORM=#{ENV['HOMEBREW_PROXMARK3_PLATFORM']}"
     end
 
     bin.mkpath
