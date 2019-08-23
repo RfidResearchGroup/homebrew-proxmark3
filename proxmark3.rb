@@ -47,11 +47,8 @@ class Proxmark3 < Formula
 #	bin.install "tools/mfkey/mfkey64" => "mfkey64"
 
     # default keys
-    bin.install "client/default_keys.dic" => "default_keys.dic"
-    bin.install "client/default_pwd.dic" => "default_pwd.dic"
-    if File.exist?("client/default_iclass_keys.dic") then
-        bin.install "client/default_iclass_keys.dic" => "default_iclass_keys.dic"
-    end
+    (bin/"dictionaries").mkpath
+    (bin/"dictionaries").install Dir["client/dictionaries/*"]
 
     # hardnested files
     (bin/"hardnested").mkpath
@@ -63,8 +60,8 @@ class Proxmark3 < Formula
     (bin/"lualibs").install Dir["client/lualibs/*"]
 
     # lua scripts
-    (bin/"scripts").mkpath
-    (bin/"scripts").install Dir["client/scripts/*"]
+    (bin/"luascripts").mkpath
+    (bin/"luascripts").install Dir["client/luascripts/*"]
 
     # trace files for experimentations
     (bin/"traces").mkpath
