@@ -68,13 +68,6 @@ class Proxmark3 < Formula
     (bin/"traces").mkpath
     (bin/"traces").install Dir["traces/*"]
 
-    # do we need to copy this one to emv folder? (iceman)
-    # emv public keys file
-    if File.exist?("client/resources/capk.txt") then
-        (bin/"emv").mkpath
-        (bin/"emv").install "client/resources/capk.txt"
-    end
-
     # compiled firmware for flashing
     share.mkpath
     (share/"proxmark3").mkpath
