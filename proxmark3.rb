@@ -32,7 +32,7 @@ class Proxmark3 < Formula
       ENV['HOMEBREW_PROXMARK3_PLATFORM'] = 'PM3RDV4'
     end
 
-    system "make", "clean"	  
+    system "make", "clean"
     if build.with? "blueshark"
       system "make", "all", "PLATFORM=#{ENV['HOMEBREW_PROXMARK3_PLATFORM']}", "PLATFORM_EXTRAS=BTADDON"
     else
@@ -43,17 +43,17 @@ class Proxmark3 < Formula
     bin.install "client/flasher" => "proxmark3-flasher"
     bin.install "client/proxmark3" => "proxmark3"
 #   bin.install "client/fpga_compress" => "fpga_compress"
-#	bin.install "tools/mfkey/mfkey32" => "mfkey32"
-#	bin.install "tools/mfkey/mfkey64" => "mfkey64"
+#   bin.install "tools/mfkey/mfkey32" => "mfkey32"
+#   bin.install "tools/mfkey/mfkey64" => "mfkey64"
 
     # default keys
     (bin/"dictionaries").mkpath
     (bin/"dictionaries").install Dir["client/dictionaries/*"]
 
-    # hardnested files
-    (bin/"hardnested").mkpath
-    (bin/"hardnested").install "client/hardnested/bf_bench_data.bin"
-    (bin/"hardnested/tables").install Dir["client/hardnested/tables/*"]	
+    # resource files
+    (bin/"resources").mkpath
+    (bin/"resources").install "client/resources/hardnested_bf_bench_data.bin"
+    (bin/"resources/hardnested_tables").install Dir["client/resources/hardnested_tables/*"]
 
     # lua libs for proxmark3 scripts
     (bin/"lualibs").mkpath
@@ -74,7 +74,7 @@ class Proxmark3 < Formula
     end
 
     # compiled firmware for flashing
-    share.mkpath	
+    share.mkpath
     (share/"firmware").mkpath
     (share/"firmware").install "armsrc/obj/fullimage.elf" => "fullimage.elf"
     (share/"firmware").install "bootrom/obj/bootrom.elf" => "bootrom.elf"
