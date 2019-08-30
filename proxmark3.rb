@@ -34,49 +34,14 @@ class Proxmark3 < Formula
 
     system "make", "clean"
     if build.with? "blueshark"
-      system "make", "all", "PLATFORM=#{ENV['HOMEBREW_PROXMARK3_PLATFORM']}", "PLATFORM_EXTRAS=BTADDON"
+      system "make", "-j", "all", "PLATFORM=#{ENV['HOMEBREW_PROXMARK3_PLATFORM']}", "PLATFORM_EXTRAS=BTADDON"
     else
-      system "make", "all", "PLATFORM=#{ENV['HOMEBREW_PROXMARK3_PLATFORM']}"
+      system "make", "-j", "all", "PLATFORM=#{ENV['HOMEBREW_PROXMARK3_PLATFORM']}"
     end
 
-    bin.mkpath
-    bin.install "client/flasher" => "proxmark3-flasher"
-    bin.install "client/proxmark3" => "proxmark3"
-#   bin.install "tools/mfkey/mfkey32" => "mfkey32"
-#   bin.install "tools/mfkey/mfkey32v2" => "mfkey32v2"
-#   bin.install "tools/mfkey/mfkey64" => "mfkey64"
-#   bin.install "tools/nonce2key/nonce2ky" => "nonce2key"
+    system "make", "install", "PREFIX=#{prefix}"
 
-    # default keys
-    (bin/"dictionaries").mkpath
-    (bin/"dictionaries").install Dir["client/dictionaries/*"]
-
-    # resource files
-    (bin/"resources").mkpath
-    (bin/"resources").install Dir["client/resources/*"]
-    (bin/"resources/hardnested_tables").install Dir["client/resources/hardnested_tables/*"]
-
-    # lua libs for proxmark3 scripts
-    (bin/"lualibs").mkpath
-    (bin/"lualibs").install Dir["client/lualibs/*"]
-
-    # lua scripts
-    (bin/"luascripts").mkpath
-    (bin/"luascripts").install Dir["client/luascripts/*"]
-
-    # trace files for experimentations
-    (bin/"traces").mkpath
-    (bin/"traces").install Dir["traces/*"]
-
-    # compiled firmware for flashing
-    share.mkpath
-    (share/"proxmark3").mkpath
-    (share/"proxmark3/firmware").mkpath
-    (share/"proxmark3/firmware").install "armsrc/obj/fullimage.elf" => "fullimage.elf"
-    (share/"proxmark3/firmware").install "bootrom/obj/bootrom.elf" => "bootrom.elf"
-    (share/"proxmark3/firmware").install "recover/proxmark3_recovery.bin" => "proxmark3_recovery.bin"
-
-    ohai "Install success!  Only proxmark3-flashern is available."
+    ohai "Install success!"
     ohai "The latest bootloader and firmware binaries are ready and waiting in the current homebrew Cellar within share/firmware."
   end
 
