@@ -42,9 +42,10 @@ class Proxmark3 < Formula
     bin.mkpath
     bin.install "client/flasher" => "proxmark3-flasher"
     bin.install "client/proxmark3" => "proxmark3"
-#   bin.install "client/fpga_compress" => "fpga_compress"
 #   bin.install "tools/mfkey/mfkey32" => "mfkey32"
+#   bin.install "tools/mfkey/mfkey32v2" => "mfkey32v2"
 #   bin.install "tools/mfkey/mfkey64" => "mfkey64"
+#   bin.install "tools/nonce2key/nonce2ky" => "nonce2key"
 
     # default keys
     (bin/"dictionaries").mkpath
@@ -68,16 +69,19 @@ class Proxmark3 < Formula
     (bin/"traces").install Dir["traces/*"]
 
     # emv public keys file
-    if File.exist?("client/emv/capk.txt") then
+    if File.exist?("client/resources/capk.txt") then
         (bin/"emv").mkpath
-        (bin/"emv").install "client/emv/capk.txt"
+        (bin/"emv").install "client/resources/capk.txt"
     end
 
     # compiled firmware for flashing
     share.mkpath
-    (share/"firmware").mkpath
-    (share/"firmware").install "armsrc/obj/fullimage.elf" => "fullimage.elf"
-    (share/"firmware").install "bootrom/obj/bootrom.elf" => "bootrom.elf"
+    (share/"proxmark3").mkpath
+    (share/"proxmark3/firmware").mkpath
+    (share/"proxmark3/firmware").install "armsrc/obj/fullimage.elf" => "fullimage.elf"
+    (share/"proxmark3/firmware").install "bootrom/obj/bootrom.elf" => "bootrom.elf"
+    (share/"proxmark3/firmware").install "recover/proxmark3_recovery.bin" => "proxmark3_recovery.bin"
+
     ohai "Install success!  Only proxmark3-flashern is available."
     ohai "The latest bootloader and firmware binaries are ready and waiting in the current homebrew Cellar within share/firmware."
   end
