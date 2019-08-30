@@ -53,7 +53,7 @@ class Proxmark3 < Formula
 
     # resource files
     (bin/"resources").mkpath
-    (bin/"resources").install "client/resources/hardnested_bf_bench_data.bin"
+    (bin/"resources").install Dir["client/resources/*"]
     (bin/"resources/hardnested_tables").install Dir["client/resources/hardnested_tables/*"]
 
     # lua libs for proxmark3 scripts
@@ -68,6 +68,7 @@ class Proxmark3 < Formula
     (bin/"traces").mkpath
     (bin/"traces").install Dir["traces/*"]
 
+    # do we need to copy this one to emv folder? (iceman)
     # emv public keys file
     if File.exist?("client/resources/capk.txt") then
         (bin/"emv").mkpath
