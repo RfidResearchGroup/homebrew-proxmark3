@@ -12,15 +12,9 @@ class Proxmark3 < Formula
     end
   end
   
-  depends_on "automake" => :build
   depends_on "readline"
-  depends_on "p7zip" => :build
-  depends_on "libusb"
-  depends_on "libusb-compat"
   depends_on "pkg-config" => :build
-  depends_on "wget"
   depends_on "qt5"
-  depends_on "perl"
   depends_on "RfidResearchGroup/proxmark3/arm-none-eabi-gcc" => :build
 
   option "with-blueshark", "Enable Blueshark (BT Addon) support"
