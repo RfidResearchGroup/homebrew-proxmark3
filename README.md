@@ -32,27 +32,13 @@ The old HID-flasher doesn't compile on this version. You'll need to manually fix
 	 
 ### Usage
 
-Proxmark3 will be installed in 
+Proxmark3 client will be installed in 
 `/usr/local/bin/proxmark3`  
 
-Firmware located at 
+Firmware will be located in 
 `/usr/local/share/firmware/`  
 
-
-#### Connect to device
-`proxmark3 /dev/tty.usbmodemiceman1` 
-
-usually you replace the tty with where your proxmark3 device got installed on your system.
-
-
-#### Flashing bootloader & firmware  
-`sudo proxmark3-flasher /dev/tty.usbmodemiceman1 -b /usr/local/share/firmware/bootrom.elf /usr/local/share/firmware/fullimage.elf`  
- 
-	
-### Info
-
-Current release version is UNKNOWN
-
+See [instructions on the RRG repo](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Installation_Instructions/Mac-OS-X-Homebrew-Installation-Instructions.md#flash-the-bootrom--fullimage)
 
 ### Maintainers
 
