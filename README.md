@@ -1,11 +1,12 @@
-Homebrew tap of RRG Proxmark3 repo based on iceman fork
-=======================================================
+Homebrew tap for RRG/Iceman Proxmark3 repo
+=========================================
 
 [Homebrew](http://brew.sh) - is a open-source package manager for Apple macOS.
 
-This repository contains homebrew formulas for Rfid Research Group RRG proxmark3 project with it dependencies.
-The repo is based on iceman fork.
-The old HID-flasher doesn't compile on this version. You'll need to manually fix/compile it on MacOS.
+This repository contains homebrew formulas for RRG/Iceman Proxmark3 project with it dependencies.
+
+[note]
+The old HID-flasher doesn't compile on this version. You'll need to manually fix/compile it on MacOS but this old flasher software is used if you have firmware from 2012 installed on your device.  
 
 ### Install
 
@@ -37,6 +38,9 @@ Proxmark3 client will be installed in
 
 Firmware will be located in 
 `/usr/local/share/firmware/`  
+
+_If you did a **install --HEAD**,  the firmware will be located in a subfolder_
+
 
 See [instructions on the RRG repo](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Installation_Instructions/Mac-OS-X-Homebrew-Installation-Instructions.md#flash-the-bootrom--fullimage)
 
