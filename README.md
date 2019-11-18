@@ -39,8 +39,7 @@ Proxmark3 client will be installed in
 Firmware will be located in 
 `/usr/local/share/firmware/`  
 
-_If you did a **install --HEAD**,  the firmware will be located in a subfolder_
-
+The paths mentioned above are symlinks created by Homebrew (`brew install` implies `brew link`) to your Cellar.
 
 See [instructions on the RRG repo](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Installation_Instructions/Mac-OS-X-Homebrew-Installation-Instructions.md#flash-the-bootrom--fullimage)
 
