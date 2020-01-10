@@ -32,7 +32,7 @@ class Proxmark3 < Formula
       system "make", "all", "PLATFORM=#{ENV['HOMEBREW_PROXMARK3_PLATFORM']}"
     end
 
-    system "make", "install", "PREFIX=#{prefix}"
+    system "make", "install", "PREFIX=#{prefix}", "PLATFORM=#{ENV['HOMEBREW_PROXMARK3_PLATFORM']}"
 
     ohai "Install success!"
     ohai "The latest bootloader and firmware binaries are ready and waiting in the current homebrew Cellar within share/firmware."
