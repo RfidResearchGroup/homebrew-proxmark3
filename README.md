@@ -19,7 +19,8 @@ The old HID-flasher doesn't compile on this version. You'll need to manually fix
      - `export HOMEBREW_PROXMARK3_PLATFORM=PM3OTHER` == For all other Proxmark3 devices (non RDV4)
   - `brew install proxmark3` for stable release 
   - `brew install --HEAD proxmark3` for latest non-stable from GitHub (use this if previous command fails)
-  - `brew install --with-blueshark proxmark3` for blueshark support
+  - `brew install --with-blueshark proxmark3` for blueshark support, stable release
+  - `brew install --HEAD --with-blueshark proxmark3` for blueshark support, latest non-stable from GitHub (use this if previous command fails)
 
 ### Errors while running
 
