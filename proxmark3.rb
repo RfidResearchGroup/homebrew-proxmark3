@@ -14,7 +14,7 @@ class Proxmark3 < Formula
   depends_on "readline"
   depends_on "pkg-config" => :build
   depends_on "qt5"
-  depends_on "RfidResearchGroup/proxmark3/arm-none-eabi-gcc" => :build
+  depends_on "tcprst/proxmark3/arm-none-eabi-gcc" => :build
 
   option "with-blueshark", "Enable Blueshark (BT Addon) support"
 
