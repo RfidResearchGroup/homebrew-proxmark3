@@ -15,12 +15,36 @@ The old HID-flasher doesn't compile on this version. You'll need to manually fix
 - Tap this repo: `brew tap rfidresearchgroup/proxmark3`
 
 - Install Proxmark3:
-  - (Optional) `export HOMEBREW_PROXMARK3_PLATFORM=xxxxxx` to specify [platform](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#platform), default value is `PM3RDV4` if none
-     - `export HOMEBREW_PROXMARK3_PLATFORM=PM3GENERIC` == For all other Proxmark3 devices (non RDV4)
   - `brew install proxmark3` for stable release 
   - `brew install --HEAD proxmark3` for latest non-stable from GitHub (use this if previous command fails)
   - `brew install --with-blueshark proxmark3` for blueshark support, stable release
   - `brew install --HEAD --with-blueshark proxmark3` for blueshark support, latest non-stable from GitHub (use this if previous command fails)
+
+### Build options
+
+Use `brew info proxmark3` to see all available options.
+
+#### Platform selection
+
+Firmware is built for the Proxmark3 RDV4 device by default. Use the following options to select other platforms:
+
+- `--with-generic`: build for generic (non-RDV4) devices, see [platform](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#platform).
+- `--with-small`: enable build-time size limit for devices with 256kB flash, see [256kb versions](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#256kb-versions).
+
+#### Removing features
+
+When installing with `--HEAD`, it's possible to remove features to reduce firmware size for 256kB devices using options such as `--without-lf`, `--without-hitag`, etc.
+
+`--without-foo` corresponds to the `SKIP_FOO` compile options listed [here](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#256kb-versions).
+
+#### Standalone mode
+
+Firmware is built with the `HF_MSDSAL` standalone mode by default. Use the `--with-lf-foo` or `--with-hf-foo` options to select a different standalone mode,
+or `--without-standalone` to disable standalone mode altogether.
+
+`--with-lf-foo` corresponds to the `STANDALONE=LF_FOO` compile options listed [here](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#standalone).
+
+Some of these options will only work with `--HEAD`.
 
 ### Errors while running
 
