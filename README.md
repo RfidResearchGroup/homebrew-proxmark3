@@ -68,9 +68,3 @@ Firmware will be located in
 The paths mentioned above are symlinks created by Homebrew (`brew install` implies `brew link`) to your Cellar.
 
 See [instructions on the RRG repo](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Installation_Instructions/Mac-OS-X-Homebrew-Installation-Instructions.md#flash-the-bootrom--fullimage)
-
-### Maintainers
-
-original [chrisfu](https://github.com/chrisfu/homebrew-tap), [zhovner](https://github.com/zhovner)
-
-fork [iceman1001](https://github.com/RfidResearchGroup/homebrew-proxmark3)
