@@ -1,8 +1,8 @@
 class Proxmark3 < Formula
   desc "RRG/Iceman Proxmark3 client, CDC flasher and firmware bundle"
   homepage "http://www.proxmark.org/"
-  url "https://github.com/RfidResearchGroup/proxmark3/archive/v4.9237.tar.gz"
-  sha256 "db93c2d3b9b7f477aca5628ed0906d9dba9c1999080452b24c601f38ab5b5226"
+  url "https://github.com/RfidResearchGroup/proxmark3/archive/v4.13441.tar.gz"
+  sha256 "49c4f1854b364aa7ea7083581351f867128e71ea783d0ecd71fc41bcf7f63584"
 
   head do
     if ENV.has_key?('HOMEBREW_TRAVIS_COMMIT')
