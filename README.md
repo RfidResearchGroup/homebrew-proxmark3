@@ -33,7 +33,7 @@ Firmware is built for the Proxmark3 RDV4 device by default. Use the following op
 
 #### Removing features
 
-When installing with `--HEAD`, it's possible to remove features to reduce firmware size for 256kB devices using options such as `--without-lf`, `--without-hitag`, etc.
+It's possible to remove features to reduce firmware size for 256kB devices using options such as `--without-lf`, `--without-hitag`, etc.
 
 `--without-foo` corresponds to the `SKIP_FOO` compile options listed [here](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#256kb-versions).
 
@@ -43,8 +43,6 @@ Firmware is built with the `HF_MSDSAL` standalone mode by default. Use the `--wi
 or `--without-standalone` to disable standalone mode altogether.
 
 `--with-lf-foo` corresponds to the `STANDALONE=LF_FOO` compile options listed [here](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#standalone).
-
-Some of these options will only work with `--HEAD`.
 
 ### Errors while running
 
