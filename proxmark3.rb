@@ -19,7 +19,7 @@ class Proxmark3 < Formula
 
   option "with-blueshark", "Enable Blueshark (BT Addon) support"
   option 'with-generic', 'Build for generic devices instead of RDV4'
-  option 'with-small', 'Build for 256kB devices (HEAD only)'
+  option 'with-small', 'Build for 256kB devices'
 
   FUNCTIONS = %w[em4x50 felica hfplot hfsniff hitag iclass iso14443a iso14443b iso15693 legicrf lf nfcbarcode]
   STANDALONE = {
@@ -28,7 +28,7 @@ class Proxmark3 < Formula
   }
 
   FUNCTIONS.each do |func|
-    option "without-#{func}", "Build without #{func.upcase} functionality (HEAD only)"
+    option "without-#{func}", "Build without #{func.upcase} functionality"
   end
 
   option 'without-standalone', 'Build without standalone mode'
@@ -44,17 +44,15 @@ class Proxmark3 < Formula
 
     args = %W[
       BREW_PREFIX=#{HOMEBREW_PREFIX}
-      PLATFORM=#{build.with?('generic') ? (build.head? ? 'PM3GENERIC' : 'PM3OTHER') : 'PM3RDV4'}
+      PLATFORM=#{build.with?('generic') ? 'PM3GENERIC' : 'PM3RDV4'}
     ]
 
     args << 'PLATFORM_EXTRAS=BTADDON' if build.with? 'blueshark'
     args << 'PLATFORM_SIZE=256' if build.with? 'small'
     args << 'SKIPQT=1' unless build.with? 'qt5'
 
-    if build.head?
-      FUNCTIONS.each do |func|
-        args << "SKIP_#{func.upcase}=1" unless build.with? func
-      end
+    FUNCTIONS.each do |func|
+      args << "SKIP_#{func.upcase}=1" unless build.with? func
     end
 
     standalone = build.with?('standalone') ? nil : ''
