@@ -23,10 +23,10 @@ class Proxmark3 < Formula
 
   FUNCTIONS = %w[em4x50 felica hfplot hfsniff hitag iclass iso14443a iso14443b iso15693 legicrf lf nfcbarcode]
   STANDALONE = {
-    'lf' => %w[em4100emul em4100rswb em4100rwc hidbrute icehid proxbrute samyrun skeleton tharexde],
-    'hf' => %w[14asniff aveful bog craftbyte colin iceclass legic mattyrun tcprst tmudford young]
+    'lf' => %w[em4100emul em4100rswb em4100rwc hidbrute hidfcbrute icehid proxbrute samyrun skeleton tharexde nexid],
+    'hf' => %w[14asniff aveful bog craftbyte colin iceclass legic mattyrun mfcsim msdsal tcprst tmudford young reblay]
   }
-
+  
   FUNCTIONS.each do |func|
     option "without-#{func}", "Build without #{func.upcase} functionality"
   end
