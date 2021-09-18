@@ -39,7 +39,7 @@ It's possible to remove features to reduce firmware size for 256kB devices using
 
 #### Standalone mode
 
-Firmware is built with the `HF_MSDSAL` standalone mode by default. Use the `--with-lf-foo` or `--with-hf-foo` options to select a different standalone mode,
+Firmware is built with the `LF_SAMYRUN` standalone mode by default. Use the `--with-lf-foo` or `--with-hf-foo` options to select a different standalone mode,
 or `--without-standalone` to disable standalone mode altogether.
 
 `--with-lf-foo` corresponds to the `STANDALONE=LF_FOO` compile options listed [here](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#standalone).
