@@ -1,8 +1,8 @@
 class Proxmark3 < Formula
   desc "RRG/Iceman Proxmark3 client, CDC flasher and firmware bundle"
   homepage "http://www.proxmark.org/"
-  url "https://github.com/RfidResearchGroup/proxmark3/archive/v4.14434.tar.gz"
-  sha256 "c92fb48f14d7428b9b06b9a2b966278ae9ada469b80f0eba1cc5bc001df86db6"
+  url "https://github.com/RfidResearchGroup/proxmark3/archive/v4.14831.tar.gz"
+  sha256 "36006cf30c30a533027de851fe9a96593a093e2e03cddf1703aa81940b9bb9a9"
 
   head do
     if ENV.has_key?('HOMEBREW_TRAVIS_COMMIT')
@@ -21,10 +21,11 @@ class Proxmark3 < Formula
   option 'with-generic', 'Build for generic devices instead of RDV4'
   option 'with-small', 'Build for 256kB devices'
 
-  FUNCTIONS = %w[em4x50 felica hfplot hfsniff hitag iclass iso14443a iso14443b iso15693 legicrf lf nfcbarcode]
+  FUNCTIONS = %w[em4x50 felica hfplot hfsniff hitag iclass iso14443a iso14443b iso15693 legicrf lf nfcbarcode zx8211]
   STANDALONE = {
-    'lf' => %w[em4100emul em4100rswb em4100rwc hidbrute hidfcbrute icehid proxbrute samyrun skeleton tharexde nexid],
-    'hf' => %w[14asniff aveful bog craftbyte colin iceclass legic mattyrun mfcsim msdsal tcprst tmudford young reblay]
+    'lf' => %w[em4100emul em4100rswb em4100rwc hidbrute hidfcbrute icehid nexid proxbrute samyrun tharexde],
+    'hf' => %w[14asniff 15sniff aveful bog colin craftbyte iceclass legic mattyrun mfcsim msdsal reblay tcprst tmudford young]
+      '' => %w[dankarmulti]
   }
   
   FUNCTIONS.each do |func|
