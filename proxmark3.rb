@@ -17,7 +17,7 @@ class Proxmark3 < Formula
   depends_on "pkg-config" => :build
   depends_on "openssl@3" => :build
   depends_on "qt5" => :recommended
-  depends_on "./arm-none-eabi-gcc" => :build
+  depends_on "rfidresearchgroup/proxmark3/arm-none-eabi-gcc" => :build
 
   option "with-blueshark", "Enable Blueshark (BT Addon) support"
   option 'with-generic', 'Build for generic devices instead of RDV4'
