@@ -54,6 +54,11 @@ or `--without-standalone` to disable standalone mode altogether.
    brew reinstall proxmark3
    ```
 
+### Force HomeBrew to pull the latest source from github
+
+```sh
+brew upgrade --fetch-HEAD proxmark3
+```
 	 
 ### Usage
 
