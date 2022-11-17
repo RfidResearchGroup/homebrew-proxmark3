@@ -26,7 +26,7 @@ class Proxmark3 < Formula
 
   FUNCTIONS = %w[em4x50 felica hfplot hfsniff hitag iclass iso14443a iso14443b iso15693 legicrf lf nfcbarcode zx8211]
   STANDALONE = {
-    'lf' => %w[em4100emul em4100rswb em4100rwc hidbrute hidfcbrute icehid nexid proxbrute samyrun tharexde],
+    'lf' => %w[em4100emul em4100rswb em4100rsww em4100rwc hidbrute hidfcbrute icehid nexid proxbrute samyrun tharexde],
     'hf' => %w[14asniff 14bsniff 15sniff aveful bog colin craftbyte iceclass legic legicsim mattyrun mfcsim msdsal reblay tcprst tmudford young]
   }
   
