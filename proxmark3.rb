@@ -1,8 +1,8 @@
 class Proxmark3 < Formula
   desc "RRG/Iceman Proxmark3 client, CDC flasher and firmware bundle"
   homepage "http://www.proxmark.org/"
-  url "https://github.com/RfidResearchGroup/proxmark3/archive/v4.16717.tar.gz"
-  sha256 "675a785e859d600b55de67ecd17a85ff26741d8e1b74c51ed0fa585850b44f3f"
+  url "https://github.com/RfidResearchGroup/proxmark3/archive/v4.17140.tar.gz"
+  sha256 "b38872d36f49fba4be76ee9c2691ec30583c1faad9616c3a1bd14f167f43bada"
 
   head do
     if ENV.has_key?('HOMEBREW_TRAVIS_COMMIT')
@@ -27,7 +27,7 @@ class Proxmark3 < Formula
   FUNCTIONS = %w[em4x50 felica hfplot hfsniff hitag iclass iso14443a iso14443b iso15693 legicrf lf nfcbarcode zx8211]
   STANDALONE = {
     'lf' => %w[em4100emul em4100rswb em4100rsww em4100rwc hidbrute hidfcbrute icehid multihid nedap_sim nexid proxbrute prox2brute samyrun tharexde],
-    'hf' => %w[14asniff 14bsniff 15sniff aveful bog colin craftbyte iceclass legic legicsim mattyrun mfcsim msdsal reblay tcprst tmudford young]
+    'hf' => %w[14asniff 14bsniff 15sniff aveful bog cardhopper colin craftbyte iceclass legic legicsim mattyrun mfcsim msdsal reblay tcprst tmudford young]
   }
   
   FUNCTIONS.each do |func|
