@@ -18,6 +18,8 @@ class Proxmark3 < Formula
   depends_on "openssl@3" => :build
   depends_on "qt5" => :recommended
   depends_on "python3" => :recommended
+  depends_on "gd" => :recommended
+  depends_on "openssl" => :recommended
   depends_on "rfidresearchgroup/proxmark3/arm-none-eabi-gcc" => :build
 
   option "with-blueshark", "Enable Blueshark (BT Addon) support"
