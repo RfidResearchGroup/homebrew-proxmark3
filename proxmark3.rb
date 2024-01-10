@@ -53,7 +53,7 @@ class Proxmark3 < Formula
     ]
 
     args << 'PLATFORM_EXTRAS=BTADDON' if build.with? 'blueshark'
-    args << 'PLATFORM_SIZE=256' if build.with? 'small'
+    args << 'PLATFORM_SIZE=256 PLATFORM=PM3GENERIC STANDALONE= SKIP_HITAG=1 SKIP_LEGICRF=1 SKIP_EM4x50=1 SKIP_ICLASS=1 SKIP_FELICA=1 SKIP_HFPLOT=1 SKIP_HFSNIFF=1 SKIP_NFCBARCODE=1 SKIP_ZX8211=1' if build.with? 'small'
     args << 'SKIPQT=1' unless build.with? 'qt5'
 
     FUNCTIONS.each do |func|
