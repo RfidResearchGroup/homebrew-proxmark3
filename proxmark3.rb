@@ -14,6 +14,7 @@ class Proxmark3 < Formula
 
   depends_on "readline"
   depends_on "coreutils"
+  depends_on "lua" => :build
   depends_on "pkg-config" => :build
   depends_on "openssl@3" => :build
   depends_on "qt5" => :recommended
