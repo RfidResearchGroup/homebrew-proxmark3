@@ -16,7 +16,7 @@ class Proxmark3 < Formula
   depends_on "lua" => :build
   depends_on "pkg-config" => :build
   depends_on "openssl@3" => :build
-  depends_on "qt5" => :recommended
+  depends_on "qt@5" => :recommended
   depends_on "python@3.11" => :build
   depends_on "gd" => :recommended
   depends_on "openssl" => :recommended
