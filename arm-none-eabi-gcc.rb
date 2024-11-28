@@ -1,10 +1,15 @@
 class ArmNoneEabiGcc < Formula
   desc "GCC for embedded ARM processors"
-  homepage 'https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads'
-  version '10.3-2021.10'
+  homepage 'https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads'
+  version '13.3-2024.7'
 
-  url 'https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-mac.tar.bz2'
-  sha256 'fb613dacb25149f140f73fe9ff6c380bb43328e6bf813473986e9127e2bc283b' 
+  if Hardware::CPU.intel?
+    url "https://developer.arm.com/-/media/Files/downloads/gnu/13.3.rel1/binrel/arm-gnu-toolchain-13.3.rel1-darwin-x86_64-arm-none-eabi.tar.xz"
+    sha256 "1ab00742d1ed0926e6f227df39d767f8efab46f5250505c29cb81f548222d794"
+  else
+    url 'https://developer.arm.com/-/media/Files/downloads/gnu/13.3.rel1/binrel/arm-gnu-toolchain-13.3.rel1-darwin-arm64-arm-none-eabi.tar.xz'
+    sha256 'fb6921db95d345dc7e5e487dd43b745e3a5b4d5c0c7ca4f707347148760317b4' 
+  end
 
   def install
     (prefix/"gcc").install Dir["./*"]
