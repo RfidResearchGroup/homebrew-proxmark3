@@ -17,7 +17,7 @@ class Proxmark3 < Formula
   depends_on "pkg-config" => :build
   depends_on "openssl@3" => :build
   depends_on "qt@5" => :recommended
-  depends_on "python@3.11" => :build
+  depends_on "python@3.13" => :build
   depends_on "gd" => :recommended
   depends_on "openssl" => :recommended
   depends_on "rfidresearchgroup/proxmark3/arm-none-eabi-gcc" => :build
