@@ -62,11 +62,27 @@ brew upgrade --fetch-HEAD proxmark3
 	 
 ### Usage
 
-Proxmark3 client will be installed in 
-`/usr/local/bin/proxmark3`  
+When installed via Homebrew, the Proxmark3 client and firmware are placed in architecture-dependent locations.
 
-Firmware will be located in 
-`/usr/local/share/firmware/`  
+#### **For Apple Silicon**
+
+Homebrew installs packages into `/opt/homebrew` by default on Apple Silicon systems.
+
+- **Proxmark3 client** will be located at:  
+  `/opt/homebrew/bin/proxmark3`
+
+- **Firmware** will be located at:  
+  `/opt/homebrew/share/proxmark3/firmware/`
+
+#### **For Intel-based macOS**
+
+Homebrew uses the legacy prefix `/usr/local` on Intel-based macOS systems.
+
+- **Proxmark3 client** will be located at:  
+  `/usr/local/bin/proxmark3`
+
+- **Firmware** will be located at:  
+  `/usr/local/share/firmware/`
 
 The paths mentioned above are symlinks created by Homebrew (`brew install` implies `brew link`) to your Cellar.
 
