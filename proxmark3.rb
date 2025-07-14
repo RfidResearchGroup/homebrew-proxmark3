@@ -87,7 +87,9 @@ class Proxmark3 < Formula
 
     args << "STANDALONE=#{standalone}" unless standalone.nil?
 
-    system "make", "clean"
+    args << "-j"
+
+    system "make", "clean", *args
     system "make", "all", *args
     system "make", "install", "PREFIX=#{prefix}", *args
 
