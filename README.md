@@ -19,6 +19,7 @@ The old HID-flasher doesn't compile on this version. You'll need to manually fix
   - `brew install --HEAD proxmark3` for latest non-stable from GitHub (use this if previous command fails)
   - `brew install --with-blueshark proxmark3` for blueshark support, stable release
   - `brew install --HEAD --with-blueshark proxmark3` for blueshark support, latest non-stable from GitHub (use this if previous command fails)
+  - `brew install --with-generic --with-flash proxmark3` build for generic (non-RDV4) devices with external flash chip, stable release
 
 ### Build options
 
@@ -30,6 +31,14 @@ Firmware is built for the Proxmark3 RDV4 device by default. Use the following op
 
 - `--with-generic`: build for generic (non-RDV4) devices, see [platform](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#platform).
 - `--with-small`: enable build-time size limit for devices with 256kB flash, see [256kb versions](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#256kb-versions).
+
+#### Platform extras
+
+RRG/Iceman Proxmark3 supports multiple [PLATFORM_EXTRAS](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#platform_extras) parameters. Multiple options can be used at the same time, but make sure, you select the correct ones for your device.
+
+- `--with-blueshark`: for blueshark support
+- `--with-flash`: for generic proxmark 3 devices with external flash chip
+- `--with-smartcard`: for generic proxmark 3 devices with smartcard support
 
 #### Removing features
 

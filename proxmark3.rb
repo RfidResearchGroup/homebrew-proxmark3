@@ -23,6 +23,8 @@ class Proxmark3 < Formula
   depends_on "rfidresearchgroup/proxmark3/arm-none-eabi-gcc" => :build
 
   option "with-blueshark", "Enable Blueshark (BT Addon) support"
+  option "with-smartcard", "Enable Smartcard support"
+  option "with-flash", "Enable Flash support"
   option 'with-generic', 'Build for generic devices instead of RDV4'
   option 'with-small', 'Build for 256kB devices'
 
@@ -52,7 +54,14 @@ class Proxmark3 < Formula
       PLATFORM=#{build.with?('generic') ? 'PM3GENERIC' : 'PM3RDV4'}
     ]
 
-    args << 'PLATFORM_EXTRAS=BTADDON' if build.with? 'blueshark'
+    # Build PLATFORM_EXTRAS based on selected options
+    platform_extras = []
+    platform_extras << 'BTADDON' if build.with? 'blueshark'
+    platform_extras << 'SMARTCARD' if build.with? 'smartcard'
+    platform_extras << 'FLASH' if build.with? 'flash'
+
+    args << "PLATFORM_EXTRAS=#{platform_extras.join(' ')}" unless platform_extras.empty?
+
     args << '
       PLATFORM_SIZE=256
       STANDALONE= 
