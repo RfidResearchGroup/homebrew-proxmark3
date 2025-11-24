@@ -17,7 +17,7 @@ class Proxmark3 < Formula
   depends_on "pkg-config" => :build
   depends_on "openssl@3" => :build
   depends_on "qt@5" => :recommended
-  depends_on "python@3.13" => :build
+  depends_on "python@3.14" => :build
   depends_on "gd" => :recommended
   depends_on "openssl" => :recommended
   depends_on "rfidresearchgroup/proxmark3/arm-none-eabi-gcc" => :build
@@ -33,7 +33,7 @@ class Proxmark3 < Formula
     'lf' => %w[em4100emul em4100rswb em4100rsww em4100rwc hidbrute hidfcbrute icehid multihid nedap_sim nexid proxbrute prox2brute samyrun tharexde],
     'hf' => %w[14asniff 14bsniff 15sniff aveful bog cardhopper colin craftbyte iceclass legic legicsim mattyrun mfcsim msdsal reblay st25_tearoffF tcprst tmudford unisniff young]
   }
-  
+
   FUNCTIONS.each do |func|
     option "without-#{func}", "Build without #{func.upcase} functionality"
   end
