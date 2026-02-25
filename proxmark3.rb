@@ -1,8 +1,8 @@
 class Proxmark3 < Formula
   desc "RRG/Iceman Proxmark3 client, CDC flasher and firmware bundle"
   homepage "http://www.proxmark.org/"
-  url "https://github.com/RfidResearchGroup/proxmark3/archive/refs/tags/v4.20728.tar.gz"
-  sha256 "aeb05460feba72e84d00e3da48d3bbe79cac924fb92b770eae48fcebe39e63db"
+  url "https://github.com/RfidResearchGroup/proxmark3/archive/refs/tags/v4.21128.tar.gz"
+  sha256 "f32f2484cad258274936f0f8021b48713cd94ff7523ffe33540ecc2581d04da6"
   head do
     if ENV.has_key?('HOMEBREW_TRAVIS_COMMIT')
       url "https://github.com/RfidResearchGroup/proxmark3.git", :branch => "#{ENV['HOMEBREW_TRAVIS_BRANCH']}", :revision => "#{ENV['HOMEBREW_TRAVIS_COMMIT']}"
@@ -31,7 +31,7 @@ class Proxmark3 < Formula
   FUNCTIONS = %w[em4x50 felica hfplot hfsniff hitag iclass iso14443a iso14443b iso15693 legicrf lf nfcbarcode zx8211]
   STANDALONE = {
     'lf' => %w[em4100emul em4100rswb em4100rsww em4100rwc hidbrute hidfcbrute icehid multihid nedap_sim nexid proxbrute prox2brute samyrun tharexde],
-    'hf' => %w[14asniff 14bsniff 15sniff aveful bog cardhopper colin craftbyte iceclass legic legicsim mattyrun mfcsim msdsal reblay st25_tearoffF tcprst tmudford unisniff young]
+    'hf' => %w[14asniff 14bsniff 15sniff aveful bog cardhopper colin craftbyte iceclass legic legicsim mattyrun mfcsim msdsal reblay st25_tearoffF tcprst tmudford unisniff young emvpng]
   }
 
   FUNCTIONS.each do |func|
