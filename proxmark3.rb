@@ -27,6 +27,7 @@ class Proxmark3 < Formula
   option "with-flash", "Enable Flash support"
   option 'with-generic', 'Build for generic devices instead of RDV4'
   option 'with-small', 'Build for 256kB devices'
+  option 'with-pm5', 'Build for Proxmark5'
 
   FUNCTIONS = %w[em4x50 felica hfplot hfsniff hitag iclass iso14443a iso14443b iso15693 legicrf lf nfcbarcode zx8211]
   STANDALONE = {
@@ -48,10 +49,16 @@ class Proxmark3 < Formula
 
   def install
     ENV.deparallelize
+    platform = 'PM3RDV4'
+    if build.with?('generic')
+      platform = 'PM3GENERIC'
+    elsif build.with?('pm5')
+      platform = 'PM5'
+    end
 
     args = %W[
       BREW_PREFIX=#{HOMEBREW_PREFIX}
-      PLATFORM=#{build.with?('generic') ? 'PM3GENERIC' : 'PM3RDV4'}
+      PLATFORM=#{platform}
     ]
 
     # Build PLATFORM_EXTRAS based on selected options
