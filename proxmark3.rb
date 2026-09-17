@@ -77,7 +77,7 @@ class Proxmark3 < Formula
       SKIP_ZX8211=1
       SKIP_LEGICRF=1     
       ' if build.with? 'small'
-    args << 'SKIPQT=1' unless build.with? 'qt5'
+    args << 'SKIPQT=1' unless build.with? 'qt@5'
 
     FUNCTIONS.each do |func|
       args << "SKIP_#{func.upcase}=1" unless build.with? func
