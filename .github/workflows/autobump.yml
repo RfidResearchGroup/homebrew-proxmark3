@@ -1,0 +1,51 @@
+# Generated from `brew tap-new` template (Homebrew 7.0.4).
+# Watches upstream RfidResearchGroup/proxmark3 tags via livecheck and
+# opens one PR bumping all synced client and firmware formulae (new tag + sha256).
+name: brew bump
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - .github/workflows/autobump.yml
+  schedule:
+    # Every day at 10:30 UTC
+    - cron: 30 10 * * *
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: proxmark-autobump
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash -xeuo pipefail {0}
+
+jobs:
+  autobump:
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@1e34f2e2acaa766b7efacb8c26352e6abbb023f9 # 2026.09.13.1
+
+      - name: Set up git
+        id: git_setup
+        uses: Homebrew/actions/git-user-config@1e34f2e2acaa766b7efacb8c26352e6abbb023f9 # 2026.09.13.1
+
+      - name: Bump formulae
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_GIT_COMMITTER_NAME: ${{ steps.git_setup.outputs.name }}
+          HOMEBREW_GIT_COMMITTER_EMAIL: ${{ steps.git_setup.outputs.email }}
+          TAP_NAME: ${{ steps.set-up-homebrew.outputs.tap-name }}
+        # Starting at the first member avoids duplicate PRs for the synced group.
+        run: brew bump --no-fork --open-pr --formula --bump-synced "$TAP_NAME/proxmark-client"

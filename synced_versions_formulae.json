@@ -1,0 +1,11 @@
+[
+  [
+    "proxmark-client",
+    "proxmark-client-gui",
+    "proxmark-firmware-generic",
+    "proxmark-firmware-rdv4",
+    "proxmark-firmware-pm5",
+    "proxmark-firmware-ultimate",
+    "proxmark-firmware-custom"
+  ]
+]

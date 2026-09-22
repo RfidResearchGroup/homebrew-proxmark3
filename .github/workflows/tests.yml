@@ -1,0 +1,105 @@
+# Generated from `brew tap-new` template (Homebrew 7.0.4).
+# Linux runner dropped: all formulae here are macOS-only.
+# Intel bottles are not built: Homebrew no longer bottles their dependencies.
+name: brew test-bot
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+permissions: {}
+
+defaults:
+  run:
+    shell: bash -xeuo pipefail {0}
+
+jobs:
+  test-bot:
+    if: github.event_name == 'pull_request' || github.ref_name == github.event.repository.default_branch
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-15, macos-26]
+    runs-on: ${{ matrix.os }}
+    permissions:
+      actions: read
+      checks: read
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@1e34f2e2acaa766b7efacb8c26352e6abbb023f9 # 2026.09.13.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cache Homebrew Bundler RubyGems
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+          key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: ${{ matrix.os }}-rubygems-
+
+      - run: brew test-bot --only-cleanup-before
+
+      - name: Set up and trust the upstream firmware toolchain
+        run: |
+          brew tap rfidresearchgroup/proxmark3
+          # The dependency tap is separate from the tap trusted by test-bot.
+          brew trust --formula rfidresearchgroup/proxmark3/arm-none-eabi-gcc
+
+      - run: brew test-bot --only-setup
+
+      - run: brew test-bot --only-tap-syntax
+
+      - name: Check CI helpers without GitHub writes
+        env:
+          PYTHONDONTWRITEBYTECODE: 1
+        run: python3 -m unittest discover -s .github/scripts -p 'test_*.py'
+
+      - name: Detect changed formulae
+        id: formulae
+        if: github.event_name == 'pull_request'
+        run: brew test-bot --only-formulae-detect
+
+      - name: Prepare the firmware build dependency
+        id: toolchain
+        if: github.event_name == 'pull_request'
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: 1
+          TAP_NAME: ${{ steps.set-up-homebrew.outputs.tap-name }}
+          TESTING_FORMULAE: ${{ steps.formulae.outputs.testing_formulae }}
+          ADDED_FORMULAE: ${{ steps.formulae.outputs.added_formulae }}
+          DELETED_FORMULAE: ${{ steps.formulae.outputs.deleted_formulae }}
+        run: bash .github/scripts/prepare-toolchain.sh
+
+      - name: Build and test changed formulae
+        id: tested
+        if: github.event_name == 'pull_request'
+        env:
+          TESTING_FORMULAE: ${{ steps.toolchain.outputs.testing_formulae }}
+          ADDED_FORMULAE: ${{ steps.toolchain.outputs.added_formulae }}
+          DELETED_FORMULAE: ${{ steps.toolchain.outputs.deleted_formulae }}
+        run: |
+          brew test-bot --only-formulae --testing-formulae="$TESTING_FORMULAE" \
+            --added-formulae="$ADDED_FORMULAE" --deleted-formulae="$DELETED_FORMULAE"
+
+      - name: Require every selected formula to pass
+        if: github.event_name == 'pull_request'
+        env:
+          SKIPPED_OR_FAILED: ${{ steps.tested.outputs.skipped_or_failed_formulae }}
+        run: |
+          if [[ -n "$SKIPPED_OR_FAILED" ]]; then
+            echo "Formulae were skipped or failed: $SKIPPED_OR_FAILED" >&2
+            exit 1
+          fi
+
+      - name: Upload bottles as artifact
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: bottles_${{ matrix.os }}_${{ github.run_id }}_${{ github.run_attempt }}
+          path: '*.bottle.*'

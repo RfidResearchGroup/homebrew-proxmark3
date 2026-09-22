@@ -1,0 +1,168 @@
+# Generated from `brew tap-new` template (Homebrew 7.0.4).
+# When a bump/version PR is green, dispatch this workflow with the PR
+# number: it pulls the bottle artifacts, uploads bottles to GitHub
+# Releases, commits the bottle block and pushes to the repository default branch.
+name: brew pr-pull
+
+on:
+  workflow_dispatch:
+    inputs:
+      pull_request:
+        description: Pull request number
+        required: true
+      head_sha:
+        description: Expected pull request head commit SHA (optional)
+
+permissions: {}
+
+concurrency:
+  group: proxmark-publication
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash -xeuo pipefail {0}
+
+jobs:
+  pr-pull:
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    outputs:
+      release_sha: ${{ steps.published.outputs.release_sha }}
+    permissions:
+      actions: read
+      attestations: write
+      checks: read
+      contents: write
+      id-token: write
+      issues: read
+      pull-requests: write
+    steps:
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@1e34f2e2acaa766b7efacb8c26352e6abbb023f9 # 2026.09.13.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up git
+        id: git_setup
+        uses: Homebrew/actions/git-user-config@1e34f2e2acaa766b7efacb8c26352e6abbb023f9 # 2026.09.13.1
+
+      - name: Verify the PR and its latest successful bottle build
+        id: verified
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PULL_REQUEST: ${{ inputs.pull_request }}
+          EXPECTED_HEAD_SHA: ${{ inputs.head_sha }}
+        run: python3 .github/scripts/release_guard.py snapshot "$RUNNER_TEMP/proxmark-release.json"
+
+      - name: Pull bottles
+        id: pull_bottles
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_GIT_COMMITTER_NAME: ${{ steps.git_setup.outputs.name }}
+          HOMEBREW_GIT_COMMITTER_EMAIL: ${{ steps.git_setup.outputs.email }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_SHA: ${{ steps.verified.outputs.head_sha }}
+          ARTIFACT_PATTERN: ${{ steps.verified.outputs.artifact_pattern }}
+          PULL_REQUEST: ${{ inputs.pull_request }}
+        run: |
+          python3 .github/scripts/release_guard.py verify "$RUNNER_TEMP/proxmark-release.json"
+          brew pr-pull --debug --no-upload --retain-bottle-dir --tap="$GITHUB_REPOSITORY" --head-sha="$HEAD_SHA" \
+            --artifact-pattern="$ARTIFACT_PATTERN" "$PULL_REQUEST"
+          python3 .github/scripts/release_guard.py verify "$RUNNER_TEMP/proxmark-release.json"
+
+      - name: Merge bottle metadata for this publication attempt
+        id: bottle_metadata
+        env:
+          HOMEBREW_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HOMEBREW_GIT_COMMITTER_NAME: ${{ steps.git_setup.outputs.name }}
+          HOMEBREW_GIT_COMMITTER_EMAIL: ${{ steps.git_setup.outputs.email }}
+          BOTTLE_DIR: ${{ steps.pull_bottles.outputs.bottle_path }}
+        run: |
+          release_tag="bottles-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          root_url="https://github.com/$GITHUB_REPOSITORY/releases/download/$release_tag"
+          echo "release_tag=$release_tag" >> "$GITHUB_OUTPUT"
+          cd "$BOTTLE_DIR"
+          # Homebrew filters custom environment variables; pass the URL as an argument.
+          brew ruby -e '
+            require "json"
+            root_url = ARGV.fetch(0)
+            documents = Dir["*.bottle.json"].to_h { |path| [path, JSON.parse(File.read(path))] }
+            names = documents.values.flat_map do |bottles|
+              bottles.map do |name, bottle|
+                formula = Formula[name]
+                abort "Bottle version mismatch for #{name}" unless
+                  formula.pkg_version.to_s == bottle.fetch("formula").fetch("pkg_version")
+                bottle.fetch("bottle")["root_url"] = root_url
+                name
+              end
+            end
+            abort "No bottle metadata found" if names.empty?
+            documents.each { |path, bottles| File.write(path, JSON.pretty_generate(bottles) + "\n") }
+            puts names.uniq.sort
+          ' "$root_url" > "$RUNNER_TEMP/proxmark-bottled-formulae.txt"
+          brew bottle --merge --write ./*.bottle.json
+          mapfile -t formulae < "$RUNNER_TEMP/proxmark-bottled-formulae.txt"
+          brew ruby -e '
+            root_url = ARGV.shift
+            ARGV.each do |name|
+              abort "Bottle URL mismatch for #{name}" unless
+                Formula[name].bottle_specification.root_url == root_url
+            end
+          ' "$root_url" "${formulae[@]}"
+          brew audit --skip-style "${formulae[@]}"
+
+      - name: Verify assets and upload a draft release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_SHA: ${{ steps.verified.outputs.head_sha }}
+          BOTTLE_DIR: ${{ steps.pull_bottles.outputs.bottle_path }}
+          BOTTLE_RELEASE_TAG: ${{ steps.bottle_metadata.outputs.release_tag }}
+          PULL_REQUEST: ${{ inputs.pull_request }}
+        run: |
+          python3 .github/scripts/stage-bottles.py "$BOTTLE_DIR" "$RUNNER_TEMP/proxmark-release-assets"
+          version_tag=$(python3 .github/scripts/release_guard.py tag .)
+          gh release create "$BOTTLE_RELEASE_TAG" "$RUNNER_TEMP/proxmark-release-assets/"*.tar.gz \
+            --repo "$GITHUB_REPOSITORY" --draft --target "$HEAD_SHA" \
+            --title "Proxmark3 $version_tag bottles" \
+            --notes "Bottles built from PR #$PULL_REQUEST at $HEAD_SHA."
+
+      - name: Generate build provenance
+        uses: actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6 # v4.2.2
+        with:
+          subject-path: "${{ runner.temp }}/proxmark-release-assets/*.tar.gz"
+
+      - name: Publish the complete bottle release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BOTTLE_RELEASE_TAG: ${{ steps.bottle_metadata.outputs.release_tag }}
+        run: |
+          python3 .github/scripts/release_guard.py verify "$RUNNER_TEMP/proxmark-release.json"
+          gh release edit "$BOTTLE_RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --draft=false --latest
+
+      - name: Push commits
+        uses: Homebrew/actions/git-try-push@1e34f2e2acaa766b7efacb8c26352e6abbb023f9 # 2026.09.13.1
+        with:
+          branch: ${{ github.event.repository.default_branch }}
+
+      - name: Record the published commit
+        id: published
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          release_sha=$(git rev-parse HEAD)
+          remote_sha=$(git ls-remote origin "refs/heads/$DEFAULT_BRANCH" | cut -f1)
+          if [[ "$remote_sha" != "$release_sha" ]]; then
+            echo "Default branch changed while recording the release commit" >&2
+            exit 1
+          fi
+          echo "release_sha=$release_sha" >> "$GITHUB_OUTPUT"
+
+  tag:
+    needs: pr-pull
+    permissions:
+      contents: write
+    uses: ./.github/workflows/tag.yml
+    with:
+      release_sha: ${{ needs.pr-pull.outputs.release_sha }}
