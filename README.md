@@ -21,6 +21,12 @@ The old HID-flasher doesn't compile on this version. You'll need to manually fix
   - `brew install --HEAD --with-blueshark proxmark3` for blueshark support, latest non-stable from GitHub (use this if previous command fails)
   - `brew install --with-generic --with-flash proxmark3` build for generic (non-RDV4) devices with external flash chip, stable release
 
+### Arm toolchain
+
+The Arm SDK remains at version `13.3-2024.7`. On Intel Macs, its compiler needs
+`zstd` and its debugger needs `xz`; the compiler formula declares both as
+runtime dependencies. The arm64 SDK does not need these external libraries.
+
 ### Build options
 
 Use `brew info proxmark3` to see all available options.
@@ -31,6 +37,9 @@ Firmware is built for the Proxmark3 RDV4 device by default. Use the following op
 
 - `--with-generic`: build for generic (non-RDV4) devices, see [platform](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#platform).
 - `--with-small`: enable build-time size limit for devices with 256kB flash, see [256kb versions](https://github.com/RfidResearchGroup/proxmark3/blob/master/doc/md/Use_of_Proxmark/4_Advanced-compilation-parameters.md#256kb-versions).
+
+The size option checks capacity; it does not guarantee that current firmware fits.
+Additional feature trimming may be required for 256kB devices.
 
 #### Platform extras
 
